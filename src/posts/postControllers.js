@@ -14,3 +14,17 @@ exports.listPosts = async (req, res) =>
     }
 }
 
+exports.addPosts = async (req, res) => {
+    try {
+        console.log(req.body)
+        const post = await Posts.create(req.body)
+        res.status(201).send({ message: "Post created" });
+    } catch (error) {
+        if (error.code === 11000){
+            res.status(409).send({error: error});
+        }
+        else {
+            res.status(500).send({error: error});
+        }
+    };
+}
