@@ -41,3 +41,17 @@ exports.updatePost = async (req, res) => {
         res.status(500).send({message: error})
     }
 }
+
+exports.deletePost = async (req, res) => {
+    try {
+        await Posts.destroy({
+            where: {
+                post_id: req.body.post_delete
+            }
+        });
+        res.status(200).send({message: "successsfully removed"})
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({message: error})
+    }
+}
