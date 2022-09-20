@@ -11,6 +11,7 @@ const postRouter = require("./posts/postRoutes")
 
 const port = process.env.PORT || 5000
 
+app.use(express.json())
 app.use(userRouter);
 app.use(postRouter);
 // app.get("/", tokenCheck, (req, res) =>
