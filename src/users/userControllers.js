@@ -1,4 +1,3 @@
-const sequelize = require("../db/connection")
 const Users  = require("../models/Users")
 
 // --------------------------------------------------- List User ----------------------------------------------------

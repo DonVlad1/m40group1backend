@@ -4,6 +4,7 @@ require("./db/connection");
 const cors = require("cors")
 const app = express()
 const userRouter = require("./users/userRoutes")
+const postRouter = require("./posts/postRoutes")
 
 // const { tokenCheck } = require("./middleware");
 
@@ -11,6 +12,7 @@ const userRouter = require("./users/userRoutes")
 const port = process.env.PORT || 5000
 
 app.use(userRouter);
+app.use(postRouter);
 // app.get("/", tokenCheck, (req, res) =>
 // {
 // 	res.status(200).send({ message: "You should only see if this if you are logged in" });
