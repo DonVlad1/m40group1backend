@@ -1,31 +1,46 @@
+const { sequelize } = require("./db/connection")
 const express = require("express");
 require("./db/connection");
 const cors = require("cors")
-const userRouter = require("./users/userRoutes")
+// const userRouter = require("./users/userRoutes")
 
-const { tokenCheck } = require("./middleware");
+// const { tokenCheck } = require("./middleware");
 
-const app = express();
+
 const port = process.env.PORT || 5000
 
 // app.use(express.static("public"))
-app.use(cors());
-app.use(express.json());
-app.use(userRouter);
-app.get("/", tokenCheck, (req, res) =>
+// app.use(userRouter);
+// app.get("/", tokenCheck, (req, res) =>
+// {
+// 	res.status(200).send({ message: "You should only see if this if you are logged in" });
+// });
+
+// app.listen(port, () =>
+// {
+// 	console.log(`listening on port ${port}`)
+// })
+
+// app.get("/health", (req, res) =>
+// {
+// 	res.status(200).send({ message: "Api working" });
+// });
+
+const app = async (yargsObject) =>
 {
-	res.status(200).send({ message: "You should only see if this if you are logged in" });
-});
+	try
+	{
+		await sequelize.sync()
+		console.log("connection successful")
+		sequelize.close()
+	}
 
-app.listen(port, () =>
-{
-	console.log(`listening on port ${port}`)
-})
+	catch (error)
+	{
+		console.log("Error happened, plz help")
+		console.log(error)
+	}
 
-app.get("/health", (req, res) =>
-{
-	res.status(200).send({ message: "Api working" });
-});
+}
 
-
-  //test2
+app()
