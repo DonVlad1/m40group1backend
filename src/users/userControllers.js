@@ -1,24 +1,21 @@
-const User = require("./userModel");
-
+const sequelize = require("../db/connection")
+const Users  = require("../models/Users")
 
 // --------------------------------------------------- List User ----------------------------------------------------
-// exports.listUsers = async (req, res) => {
-//     try {
-//         let UserList = await User.find({});
-//         if (UserList.length > 0){
-//             console.log("inside listUsers");
-//             res.status(200).send(UserList);
-//         }
-//         else {
-//             console.log("Nothing to display");
-//             res.status(400).send({error: "request failed"});
-//         }
-//     } catch (e) {
-//         console.log("error in listUsers");
-//         res.status(500).send({error:"internal server error"});
-//         console.log(e);
-//     }
-// }
+exports.listUsers = async (req, res) =>
+{
+    try
+    {
+        const list = await Users.findAll()
+        // console.table(await list.map(value => value.dataValues));
+        res.status(200).send(list);
+    }
+    catch (error)
+    {
+        console.log(error)
+    }
+}
+
 // exports.listUserName = async (req, res) => {
 //     try {
 //         let userList = await User.find({});

@@ -10,7 +10,7 @@ const userRouter = require("./users/userRoutes")
 
 const port = process.env.PORT || 5000
 
-// app.use(userRouter);
+app.use(userRouter);
 // app.get("/", tokenCheck, (req, res) =>
 // {
 // 	res.status(200).send({ message: "You should only see if this if you are logged in" });

@@ -1,5 +1,7 @@
 const { Router } = require("express")
-// const userRouter = Router()
+const {listUsers} = require("./userControllers")
+
+const userRouter = Router()
 // const {
 //         listUsers, listUserName, listUserEmail,
 //         addUser, login, deleteUser, 
@@ -13,7 +15,7 @@ const { Router } = require("express")
 // userRouter.post("/user/signup",[hashPassword], addUser);
         
 // // ---------------------- read ----------------------
-// userRouter.get("/user", listUsers);
+userRouter.get("/user", listUsers);
 // userRouter.get("/user/name", listUserName);
 // userRouter.get("/user/email", listUserEmail);
 
@@ -29,4 +31,4 @@ const { Router } = require("express")
 // userRouter.delete("/user", [tokenCheck], deleteUser);
 
 
-// module.exports = userRouter
+module.exports = userRouter
