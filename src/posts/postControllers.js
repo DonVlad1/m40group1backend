@@ -14,9 +14,8 @@ exports.listPosts = async (req, res) =>
     }
 }
 
-exports.addPosts = async (req, res) => {
+exports.addPost = async (req, res) => {
     try {
-        console.log(req.body)
         const post = await Posts.create(req.body)
         res.status(201).send({ message: "Post created" });
     } catch (error) {
@@ -27,4 +26,18 @@ exports.addPosts = async (req, res) => {
             res.status(500).send({error: error});
         }
     };
+}
+
+exports.updatePost = async (req, res) => {
+    try {
+        await Posts.update({ $set: req.body }, {
+            where: {
+                post_id: req.body.post_update
+            }
+        });
+        res.status(200).send({message: "Successfully updated post"})
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({message: error})
+    }
 }
