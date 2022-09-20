@@ -12,14 +12,20 @@ const port = process.env.PORT || 5000
 app.use(cors());
 app.use(express.json());
 app.use(userRouter);
-app.get("/", tokenCheck, (req, res) => {
+app.get("/", tokenCheck, (req, res) =>
+{
 	res.status(200).send({ message: "You should only see if this if you are logged in" });
-  });
+});
 
-app.listen(port, () => {
+app.listen(port, () =>
+{
 	console.log(`listening on port ${port}`)
 })
 
-app.get("/health", (req, res) => {
+app.get("/health", (req, res) =>
+{
 	res.status(200).send({ message: "Api working" });
-  });
+});
+
+
+  //test2
