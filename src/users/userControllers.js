@@ -148,22 +148,3 @@ exports.editPassword = async (req, res) => {
         console.log(error);
     }
 };
-// exports.editUser = async (req, res) => {
-//     try {
-//         let userList = await Users.find({})
-//         if(userList.length > 0) {
-//             await Users.updateOne(
-//                 { username: req.body.username, password: req.body.password }, 
-//                 { password: req.body.newP })
-//             res.status(201).send(await Users.find({}))
-//         }
-//         else {
-//             console.log("Nothing to edit")
-//             res.status(400).send({error: "request failed"})
-//         }
-//     } catch (e) {
-//         console.log("error in edit user")
-//         res.status(500).send({error:"internal server error"})
-//         console.log(e)
-//     }
-// }
