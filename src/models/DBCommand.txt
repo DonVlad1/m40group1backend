@@ -1,0 +1,1 @@
+node node_modules/sequelize-auto/bin/sequelize-auto -h "btughvzhbxamndyhczcj-mysql.services.clever-cloud.com" -d "btughvzhbxamndyhczcj" -u "un9rpbso8mocqh0g" -x rJT1uSDALLoaUlksPnXE -p 3306 --dialect mysql2 -o "./models"
