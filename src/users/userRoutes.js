@@ -1,5 +1,5 @@
 const { Router } = require("express")
-const {listUsers} = require("./userControllers")
+const {listUsers, addUser} = require("./userControllers")
 
 const userRouter = Router()
 // const {
@@ -10,11 +10,12 @@ const userRouter = Router()
 // const { hashPassword, tokenCheck } = require("../middleware")
 
 
-// // ---------------------- create ----------------------
+// ---------------------- create ----------------------
 // userRouter.post("/user/login", login);
+userRouter.post("/user/signup", addUser);
 // userRouter.post("/user/signup",[hashPassword], addUser);
-        
-// // ---------------------- read ----------------------
+
+// ---------------------- read ----------------------
 userRouter.get("/user", listUsers);
 // userRouter.get("/user/name", listUserName);
 // userRouter.get("/user/email", listUserEmail);
