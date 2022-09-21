@@ -26,7 +26,7 @@ exports.addUser = async (req, res) =>
     {
         let newUser = await Users.create(req.body)
         const token = jwt.sign({ "user_id": newUser.user_id }, process.env.SECRET);
-        res.status(201).send({ message: "new user added", user: newUser.username, token: token });
+        res.status(201).send({ message: "new user added", username: newUser.username, token: token });
     } catch (error)
     {
         if (error.original.errno === 1062)
@@ -52,7 +52,7 @@ exports.login = async (req, res) =>
             if (password_valid)
             {
                 const token = jwt.sign({ "user_id": user.user_id }, process.env.SECRET);
-                res.status(200).json({ user: user.username, token: token });
+                res.status(200).json({ username: user.username, token: token });
             } else
             {
                 res.status(400).json({ error: "Password Incorrect" });
