@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt  = require("jsonwebtoken");
-const User = require("../users/userModel")
+// const User = require("../users/userModel")
+const Users  = require("../models/Users")
 require("dotenv").config();
 
 exports.hashPassword = async (req, res, next) => {
@@ -23,7 +24,8 @@ exports.tokenCheck = async (req, res, next) => {
     try {
         const token = req.header("Authorization").replace("Bearer ", "");
         const decoded = jwt.verify(token, process.env.SECRET);
-        const user = await User.findOne({_id: decoded._id});
+        
+        const user = await Users.findOne({where: {user_id: decoded.user_id}});
 
         if (!user){
             throw new Error("User does not exist")

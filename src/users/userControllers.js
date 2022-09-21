@@ -1,4 +1,8 @@
 const Users  = require("../models/Users")
+const bcrypt = require("bcryptjs");
+const jwt  = require("jsonwebtoken");
+const { sequelize } = require("../db/connection");
+
 
 // --------------------------------------------------- List User ----------------------------------------------------
 exports.listUsers = async (req, res) =>
@@ -78,34 +82,47 @@ exports.addUser = async (req, res) => {
     };
 }
 
-// exports.login = async (req, res) => {
-//     const {email, password} = req.body
-//     try {
-//         const user = await User.findByCredentials(email, password);
-//         const token = user.generateAuthToken();
-//         res.status(200).send({ user: user.name, token});
-//     } catch (error) {
-//         res.status(400).send({ error: error.message });
-//     }
-// };
+exports.login = async (req, res) => {
+    try {
+        const user = await Users.findOne({ where : {email: req.body.email}})
+        if(user){
+            const password_valid = await bcrypt.compare(req.body.password,user.password)
+            if(password_valid){
+                token = jwt.sign({ "user_id" : user.user_id },process.env.SECRET);
+                res.status(200).json({ user: user.username, token : token });
+            } else {
+              res.status(400).json({ error : "Password Incorrect" });
+            }
+          }else{
+            res.status(404).json({ error : "User does not exist" });
+          }
+        } catch (error) {
+        console.log(error)
+        res.status(400).send({ error: error.message });
+    }
+};
+
 // // ------------------------------------------------- Delete User --------------------------------------------------
-// exports.deleteUser = async (req, res) => {
-//     try {
-//         if (req.user){
-//             console.log(`${req.user} Account was deleted` );
-//             await User.findByIdAndDelete(req.user._id);
-//             res.status(200).send(await User.find({}));
-//         }
-//         else {
-//             console.log("Nothing to delete");
-//             res.status(400).send({error: "request failed"});
-//         }
-//     } catch (e) {
-//         console.log("error in deleteUser");
-//         res.status(500).send({error:"internal server error"});
-//         console.log(e);
-//     }
-// }
+exports.deleteUser = async (req, res) => {
+    try {
+        if (req.user){
+            console.log(`${req.user.username} Account was deleted` );
+            // await sequelize.query(
+            //     `DELETE FROM Users WHERE user_id = '${req.user.user_id}'`
+            //     );
+            await Users.destroy({ where : {user_id: req.user.user_id}})
+            res.status(200).send(await Users.findAll());
+        }
+        else {
+            console.log("Nothing to delete");
+            res.status(400).send({error: "request failed"});
+        }
+    } catch (e) {
+        console.log("error in deleteUser");
+        res.status(500).send({error:"internal server error"});
+        console.log(e);
+    }
+}
 // // -------------------------------------------------- Edit User --------------------------------------------------
 // exports.editName = async (req, res) => {
 //     try{
