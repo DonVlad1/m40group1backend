@@ -125,11 +125,8 @@ exports.deleteUser = async (req, res) =>
             // await sequelize.query(
             //     `DELETE FROM Users WHERE user_id = '${req.user.user_id}'`
             //     );
-<<<<<<< HEAD
-            await Users.destroy({ where : {user_id: req.user.user_id}});
-=======
+
             await Users.destroy({ where: { user_id: req.user.user_id } })
->>>>>>> abd7e7949ac27cc0511cdf192648ca219b5897a7
             res.status(200).send(await Users.findAll());
         }
         else
