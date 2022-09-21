@@ -25,7 +25,8 @@ exports.addUser = async (req, res) =>
     try
     {
         let newUser = await Users.create(req.body)
-        res.status(201).send({ message: "new user added", user: newUser.username });
+        const token = jwt.sign({ "user_id": newUser.user_id }, process.env.SECRET);
+        res.status(201).send({ message: "new user added", user: newUser.username, token: token });
     } catch (error)
     {
         if (error.original.errno === 1062)
