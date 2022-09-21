@@ -1,6 +1,6 @@
-const Users  = require("../models/Users")
+const Users = require("../models/Users")
 const bcrypt = require("bcryptjs");
-const jwt  = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { sequelize } = require("../db/connection");
 
 
@@ -62,8 +62,10 @@ exports.listUsers = async (req, res) =>
 //     }
 // }
 // // --------------------------------------------------- Create ----------------------------------------------------
-exports.addUser = async (req, res) => {
-    try {
+exports.addUser = async (req, res) =>
+{
+    try
+    {
 
         let newUser = await Users.create(req.body)
         // const newUser = new Users(req.body);
@@ -71,55 +73,70 @@ exports.addUser = async (req, res) => {
         // await newUser.save();
         res.status(201).send({ message: "new user added", user: newUser.username });
         // res.status(201).send({ user: newUser.username, token });
-    } catch (error) {
-        if (error.original.errno === 1062){
-            res.status(409).send({error: "already exists!"});
+    } catch (error)
+    {
+        if (error.original.errno === 1062)
+        {
+            res.status(409).send({ error: "already exists!" });
         }
-        else {
+        else
+        {
             console.log(error)
-            res.status(500).send({error: "Oops"});
+            res.status(500).send({ error: "Oops" });
         }
     };
 }
 
-exports.login = async (req, res) => {
-    try {
-        const user = await Users.findOne({ where : {email: req.body.email}})
-        if(user){
-            const password_valid = await bcrypt.compare(req.body.password,user.password)
-            if(password_valid){
-                token = jwt.sign({ "user_id" : user.user_id },process.env.SECRET);
-                res.status(200).json({ user: user.username, token : token });
-            } else {
-              res.status(400).json({ error : "Password Incorrect" });
+exports.login = async (req, res) =>
+{
+    try
+    {
+        const user = await Users.findOne({ where: { username: req.body.username } })
+        if (user)
+        {
+            const password_valid = await bcrypt.compare(req.body.password, user.password)
+            if (password_valid)
+            {
+                token = jwt.sign({ "user_id": user.user_id }, process.env.SECRET);
+                res.status(200).json({ user: user.username, token: token });
+            } else
+            {
+                res.status(400).json({ error: "Password Incorrect" });
             }
-          }else{
-            res.status(404).json({ error : "User does not exist" });
-          }
-        } catch (error) {
+        } else
+        {
+            res.status(404).json({ error: "User does not exist" });
+        }
+    } catch (error)
+    {
         console.log(error)
         res.status(400).send({ error: error.message });
     }
 };
 
 // // ------------------------------------------------- Delete User --------------------------------------------------
-exports.deleteUser = async (req, res) => {
-    try {
-        if (req.user){
-            console.log(`${req.user.username} Account was deleted` );
+exports.deleteUser = async (req, res) =>
+{
+    try
+    {
+        if (req.user)
+        {
+            console.log(`${req.user.username} Account was deleted`);
             // await sequelize.query(
             //     `DELETE FROM Users WHERE user_id = '${req.user.user_id}'`
             //     );
-            await Users.destroy({ where : {user_id: req.user.user_id}})
+            await Users.destroy({ where: { user_id: req.user.user_id } })
             res.status(200).send(await Users.findAll());
         }
-        else {
+        else
+        {
             console.log("Nothing to delete");
-            res.status(400).send({error: "request failed"});
+            res.status(400).send({ error: "request failed" });
         }
-    } catch (e) {
+    } catch (e)
+    {
         console.log("error in deleteUser");
-        res.status(500).send({error:"internal server error"});
+        res.status(500).send({ error: "internal server error" });
         console.log(e);
     }
 }
