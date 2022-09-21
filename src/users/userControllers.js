@@ -19,60 +19,13 @@ exports.listUsers = async (req, res) =>
     }
 }
 
-// exports.listUserName = async (req, res) => {
-//     try {
-//         let userList = await User.find({});
-//         if (userList.length > 0){
-//             console.log("inside listUsername");
-//             let username = [];
-//             for(let i = 0; i < userList.length; i++){
-//                 username.push(i+1, userList[i].name);
-//             };
-//             res.status(200).send(username);
-//         }
-//         else {
-//             console.log("Nothing to display");
-//             res.status(400).send({error: "request failed"});
-//         }
-//     } catch (e) {
-//         console.log("error in listUsername");
-//         res.status(500).send({error:"internal server error"});
-//         console.log(e);
-//     }
-// }
-// exports.listUserEmail = async (req, res) => {
-//     try {
-//         let userList = await User.find({});
-//         if (userList.length > 0){
-//             console.log("inside listUsername");
-//             let user = [];
-//             for(let i = 0; i < userList.length; i++){
-//                 user.push(i+1, userList[i].email);
-//             };
-//             res.status(200).send(user);
-//         }
-//         else {
-//             console.log("Nothing to display");
-//             res.status(400).send({error: "request failed"});
-//         }
-//     } catch (e) {
-//         console.log("error in listUsername");
-//         res.status(500).send({error:"internal server error"});
-//         console.log(e);
-//     }
-// }
-// // --------------------------------------------------- Create ----------------------------------------------------
+// --------------------------------------------------- Create ----------------------------------------------------
 exports.addUser = async (req, res) =>
 {
     try
     {
-
         let newUser = await Users.create(req.body)
-        // const newUser = new Users(req.body);
-        // const token = await newUser.generateAuthToken();
-        // await newUser.save();
         res.status(201).send({ message: "new user added", user: newUser.username });
-        // res.status(201).send({ user: newUser.username, token });
     } catch (error)
     {
         if (error.original.errno === 1062)
@@ -97,7 +50,7 @@ exports.login = async (req, res) =>
             const password_valid = await bcrypt.compare(req.body.password, user.password)
             if (password_valid)
             {
-                token = jwt.sign({ "user_id": user.user_id }, process.env.SECRET);
+                const token = jwt.sign({ "user_id": user.user_id }, process.env.SECRET);
                 res.status(200).json({ user: user.username, token: token });
             } else
             {
@@ -122,10 +75,6 @@ exports.deleteUser = async (req, res) =>
         if (req.user)
         {
             console.log(`${req.user.username} Account was deleted`);
-            // await sequelize.query(
-            //     `DELETE FROM Users WHERE user_id = '${req.user.user_id}'`
-            //     );
-
             await Users.destroy({ where: { user_id: req.user.user_id } })
             res.status(200).send(await Users.findAll());
         }
