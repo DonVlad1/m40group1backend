@@ -110,7 +110,7 @@ exports.deleteUser = async (req, res) => {
             // await sequelize.query(
             //     `DELETE FROM Users WHERE user_id = '${req.user.user_id}'`
             //     );
-            await Users.destroy({ where : {user_id: req.user.user_id}})
+            await Users.destroy({ where : {user_id: req.user.user_id}});
             res.status(200).send(await Users.findAll());
         }
         else {
@@ -122,46 +122,75 @@ exports.deleteUser = async (req, res) => {
         res.status(500).send({error:"internal server error"});
         console.log(e);
     }
-}
+};
 // // -------------------------------------------------- Edit User --------------------------------------------------
-// exports.editName = async (req, res) => {
-//     try{
-//         if(req.user && req.body.name) {
-//             await User.findByIdAndUpdate(req.user._id ,{ $set : {name: req.body.name} });
-//             res.status(200).send(await User.find({name: req.body.name}));
-//         } else if (!req.body.name) {
-//             res.status(400).send({error: `use the "name" key`});
-//         }
-//     } catch (error) {
-//             res.status(500).send(console.log("Failed to update users name"));
-//             console.log(error);
-//     }
-// };
+exports.editUsername = async (req, res) => {
+    try{
+        if(req.user && req.body.username) {
+            await Users.update({ username: req.body.username }, {
+                where: {
+                    user_id: req.user.user_id
+                }
+            });
+            res.status(200).send(await Users.findOne( { where:{username: req.body.username} }));
+        } else if (!req.body.username) {
+            res.status(400).send({error: `use the "username" key`});
+        }
+    } catch (error) {
+            res.status(500).send(console.log("Failed to update users name"));
+            console.log(error);
+    }
+};
 
-// exports.editEmail = async (req, res) => {
-//     try{
-//         if(req.user && req.body.email) {
-//             await User.findByIdAndUpdate(req.user._id ,{ $set : {email: req.body.email} });
-//             res.status(200).send(await User.find({email: req.body.email}));
-//         } else if (!req.body.email){
-//             res.status(400).send({error: `use the "email" key`});
-//         }
-//     } catch (error) {
-//             res.status(500).send(console.log("Failed to update users email"));
-//             console.log(error);
-//         }
-// };
+exports.editEmail = async (req, res) => {
+    try{
+        if(req.user && req.body.email) {
+             await Users.update({ email: req.body.email }, {
+                where: {
+                  user_id: req.user.user_id
+                }
+            });
+            res.status(200).send(await Users.findOne({where: {email: req.body.email}}));
+        } else if (!req.body.email){
+            res.status(400).send({error: `use the "email" key`});
+        }
+    } catch (error) {
+            res.status(500).send(console.log("Failed to update users email"));
+            console.log(error);
+        }
+};
 
-// exports.editPassword = async (req, res) => {
-//     try{
-//         if(req.user && req.body.password) {
-//             await User.findByIdAndUpdate(req.user._id ,{ $set : {password: req.body.password} });
-//             res.status(200).send(await User.find({password: req.body.password}));
-//         } else if (!req.body.password){
-//             res.status(400).send({error: `use the "password" key`});
-//         }
-//     } catch (error) {
-//         res.status(500).send(console.log("Failed to update password"));
-//         console.log(error);
-//     }
-// };
+exports.editPassword = async (req, res) => {
+    try{
+        if(req.user && req.body.password) {
+            await Users.update({ password: req.body.password }, {
+                where: {
+                  user_id: req.user.user_id
+                }
+            });
+            res.status(200).send(await Users.findOne({where: {password: req.body.password}}));
+        } else if (!req.body.password){
+            res.status(400).send({error: `use the "password" key`});
+        }
+    } catch (error) {
+        res.status(500).send(console.log("Failed to update password"));
+        console.log(error);
+    }
+};
+exports.editPhone = async (req, res) => {
+    try{
+        if(req.user && req.body.phone) {
+            await Users.update({ phone: req.body.phone }, {
+                where: {
+                  user_id: req.user.user_id
+                }
+            });
+            res.status(200).send(await Users.findOne({where: {phone: req.body.phone}}));
+        } else if (!req.body.phone){
+            res.status(400).send({error: `use the "phone" key`});
+        }
+    } catch (error) {
+        res.status(500).send(console.log("Failed to update phonenumber"));
+        console.log(error);
+    }
+};

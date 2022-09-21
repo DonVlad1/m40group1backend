@@ -1,5 +1,5 @@
 const { Router } = require("express")
-const {listUsers, addUser, login, deleteUser} = require("./userControllers")
+const {listUsers, addUser, login, deleteUser, editUsername, editEmail, editPassword, editPhone} = require("./userControllers")
 const userRouter = Router()
 // const {
 //         listUsers, listUserName, listUserEmail,
@@ -21,11 +21,10 @@ userRouter.get("/user", listUsers);
 
 // // ---------------------- update ----------------------
 // // userRouter.put("/user", [hashPassword, tokenCheck], editUser);
-// userRouter.put("/user/editname", [tokenCheck], editName)
-
-// userRouter.put("/user/editemail", [tokenCheck], editEmail)
-
-// userRouter.put("/user/editpassword", [hashPassword, tokenCheck], editPassword)
+userRouter.put("/user/editname", [tokenCheck], editUsername)
+userRouter.put("/user/editemail", [tokenCheck], editEmail)
+userRouter.put("/user/editpassword", [hashPassword, tokenCheck], editPassword)
+userRouter.put("/user/editphone", [tokenCheck], editPhone)
 
 // // ---------------------- delete ----------------------
 userRouter.delete("/user", [tokenCheck], deleteUser);
