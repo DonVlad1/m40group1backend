@@ -53,7 +53,7 @@ exports.login = async (req, res) =>
             if (password_valid)
             {
                 const token = jwt.sign({ "user_id": user.user_id }, process.env.SECRET);
-                res.status(200).json({ username: user.username, token: token });
+                res.status(200).json({ username: user.username, email:user.email ,token: token });
             } else
             {
                 res.status(400).json({ error: "Password Incorrect" });
