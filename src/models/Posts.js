@@ -37,7 +37,7 @@ const Posts = sequelize.define('Posts', {
       allowNull: true
     },
     drivechain: {
-      type: DataTypes.STRING(10),
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     manufacture_year: {

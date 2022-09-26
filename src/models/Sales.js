@@ -1,6 +1,7 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Sales', {
+const { DataTypes } = require("sequelize")
+const { sequelize } = require("../db/connection")
+// module.exports = function(sequelize, DataTypes) 
+const Sales = sequelize.define('Sales', {
     sale_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -26,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
     time_of_sale: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
+      defaultValue: sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     sequelize,
@@ -43,4 +44,5 @@ module.exports = function(sequelize, DataTypes) {
       },
     ]
   });
-};
+
+module.exports = Sales
