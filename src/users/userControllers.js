@@ -106,8 +106,13 @@ exports.editUsername = async (req, res) => {
             res.status(400).send({error: `use the "username" key`});
         }
     } catch (error) {
-            res.status(500).send(console.log("Failed to update users name"));
+        if(error.original.errno === 1062) {
+            res.status(500).send({error: 1062});
+    
+        } else {
+            res.status(500).send({error: "Failed to update username"});
             console.log(error);
+        }
     }
 };
 
@@ -124,8 +129,14 @@ exports.editEmail = async (req, res) => {
             res.status(400).send({error: `use the "email" key`});
         }
     } catch (error) {
-            res.status(500).send(console.log("Failed to update users email"));
-            console.log(error);
+            if(error.original.errno === 1062) {
+                res.status(500).send({error: 1062});
+        
+            } else {
+                res.status(500).send({error: "Failed to update users email"});
+                console.log(error);
+            }
+            
         }
 };
 
