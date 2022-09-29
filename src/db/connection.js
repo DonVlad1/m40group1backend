@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === "production")
 {
 
     module.exports.sequelize = new Sequelize(`${process.env.DATABASE_URL} ? sslmode = require`, {
-        url: process.env.DATABASE_URI,
+        url: process.env.DATABASE_URL,
         dialect: 'postgres',
         dialectOptions: {
             ssl: {
@@ -21,5 +21,5 @@ if (process.env.NODE_ENV === "production")
 } else
 {
 
-    module.exports.sequelize = new Sequelize(process.env.DATABASE_URL);
+    module.exports.sequelize = new Sequelize(process.env.DATABASE_URI);
 }
