@@ -5,7 +5,7 @@ const { Sequelize } = require("sequelize");
 
 let sequelize;
 
-if (process.env.NODE_ENV === "prod")
+if (process.env.NODE_ENV === "production")
 {
 
     module.exports.sequelize = new Sequelize(`${process.env.DATABASE_URL} ? sslmode = require`, {
