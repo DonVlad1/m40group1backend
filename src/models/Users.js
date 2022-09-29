@@ -33,6 +33,7 @@ const Users = sequelize.define('Users', {
     },
     darkmode: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     sequelize,
