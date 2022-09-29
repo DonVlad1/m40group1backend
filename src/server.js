@@ -1,4 +1,4 @@
-const { sequelize } = require("./db/connection")
+// const { sequelize } = require("./db/connection")
 const express = require("express");
 require("./db/connection");
 const cors = require("cors")
@@ -51,7 +51,7 @@ app.get("/health", (req, res) =>
 app.listen(port, async () =>
 {
 	console.log(`listening on port ${port}`)
-	await Posts.sync({alter: true})
-	await Users.sync({alter: true})
-	await Sales.sync({alter: true})
+	await Posts.sync({ alter: true })
+	await Users.sync({ alter: true })
+	await Sales.sync({ alter: true })
 })
