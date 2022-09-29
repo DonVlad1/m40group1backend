@@ -1,5 +1,5 @@
 const { Router } = require("express")
-const {listUsers, addUser, login, deleteUser, editUsername, editEmail, editPassword, editPhone, editBio} = require("./userControllers")
+const {listUsers, addUser, login, deleteUser, editUsername, editEmail, editPassword, editPhone, editBio, editDarkmode} = require("./userControllers")
 const userRouter = Router()
 // const {
 //         listUsers, listUserName, listUserEmail,
@@ -27,6 +27,7 @@ userRouter.put("/user/editemail", [tokenCheck], editEmail)
 userRouter.put("/user/editpassword", [hashPassword, tokenCheck], editPassword)
 userRouter.put("/user/editphone", [tokenCheck], editPhone)
 userRouter.put("/user/editbio", [tokenCheck], editBio)
+userRouter.put("/user/editdarkmode", [tokenCheck], editDarkmode)
 
 // // ---------------------- delete ----------------------
 userRouter.delete("/user", [tokenCheck], deleteUser);
