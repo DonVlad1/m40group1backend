@@ -1,25 +1,25 @@
 require("dotenv").config();
 const { Sequelize } = require("sequelize");
 
-// exports.sequelize = new Sequelize(process.env.DATABASE_URL)
+exports.sequelize = new Sequelize(process.env.MYSQL_URL)
 
-let sequelize;
+// let sequelize;
 
-if (process.env.NODE_ENV === "production")
-{
+// if (process.env.NODE_ENV === "production")
+// {
 
-    module.exports.sequelize = new Sequelize(`${process.env.DATABASE_URL} ? sslmode = require`, {
-        url: process.env.DATABASE_URL,
-        dialect: 'postgres',
-        dialectOptions: {
-            ssl: {
-                rejectUnauthorized: false,
-            }
-        }
-    });
+//     module.exports.sequelize = new Sequelize(`${process.env.DATABASE_URL} ? sslmode = require`, {
+//         url: process.env.DATABASE_URL,
+//         dialect: 'postgres',
+//         dialectOptions: {
+//             ssl: {
+//                 rejectUnauthorized: false,
+//             }
+//         }
+//     });
 
-} else
-{
+// } else
+// {
 
-    module.exports.sequelize = new Sequelize(process.env.DATABASE_URI);
-}
+//     module.exports.sequelize = new Sequelize(process.env.DATABASE_URI);
+// }
