@@ -31,6 +31,10 @@ const Users = sequelize.define('Users', {
       type: DataTypes.STRING(255),
       allowNull: true
     },
+    darkmode: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {
     sequelize,
     tableName: 'Users',
@@ -68,6 +72,15 @@ const Users = sequelize.define('Users', {
           { name: "bio" },
         ]
       },
+      {
+        name: "darkmode",
+        unique: false,
+        using: "BTREE",
+        fields: [
+          { name: "darkmode" },
+        ]
+      },
+      
     ]
 });
 

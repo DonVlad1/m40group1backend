@@ -188,7 +188,25 @@ exports.editBio = async (req, res) => {
             res.status(400).send({error: `use the "bio" key`});
         }
     } catch (error) {
-        res.status(500).send(console.log("Failed to update phonenumber"));
+        res.status(500).send(console.log("Failed to update bio"));
+        console.log(error);
+    }
+};
+
+exports.editDarkmode = async (req, res) => {
+    try{
+        if(req.user) {
+            await Users.update({ darkmode: req.body.darkmode }, {
+                where: {
+                  user_id: req.user.user_id
+                }
+            });
+            res.status(200).send(await Users.findOne({where: {darkmode: req.body.darkmode}}));
+        } else {
+            res.status(400).send({error: `use the "darkmode" key`});
+        }
+    } catch (error) {
+        res.status(500).send(console.log("Failed to update darkmode"));
         console.log(error);
     }
 };
