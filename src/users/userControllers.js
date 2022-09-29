@@ -26,7 +26,7 @@ exports.addUser = async (req, res) =>
     {
         let newUser = await Users.create(req.body)
         const token = jwt.sign({ "user_id": newUser.user_id }, process.env.SECRET);
-        res.status(201).send({ message: "new user added", username: newUser.username, email:newUser.email, phone: newUser.phone, bio: newUser.bio, token: token });
+        res.status(201).send({ message: "new user added", username: newUser.username, email:newUser.email, phone: newUser.phone, bio: newUser.bio, token: token, darkmode: newUser.darkmode });
     } catch (error)
     {
         if (error.original.errno === 1062)
@@ -53,7 +53,7 @@ exports.login = async (req, res) =>
             if (password_valid)
             {
                 const token = jwt.sign({ "user_id": user.user_id }, process.env.SECRET);
-                res.status(200).json({ username: user.username, email:user.email, phone: user.phone, bio: user.bio, token: token });
+                res.status(200).json({ username: user.username, email:user.email, phone: user.phone, bio: user.bio, token: token, darkmode: user.darkmode });
             } else
             {
                 res.status(400).json({ error: "Password Incorrect" });
@@ -165,7 +165,7 @@ exports.editPhone = async (req, res) => {
                   user_id: req.user.user_id
                 }
             });
-            res.status(200).send(await Users.findOne({where: {phone: req.body.phone}}));
+            res.status(200).send(await Users.findOne({where: {user_id: req.user.user_id}}));
         } else if (!req.body.phone){
             res.status(400).send({error: `use the "phone" key`});
         }
@@ -183,7 +183,7 @@ exports.editBio = async (req, res) => {
                   user_id: req.user.user_id
                 }
             });
-            res.status(200).send(await Users.findOne({where: {bio: req.body.bio}}));
+            res.status(200).send(await Users.findOne({where: {user_id: req.user.user_id}}));
         } else if (!req.body.bio){
             res.status(400).send({error: `use the "bio" key`});
         }
@@ -196,12 +196,13 @@ exports.editBio = async (req, res) => {
 exports.editDarkmode = async (req, res) => {
     try{
         if(req.user) {
+            console.log(req.user.user_id)
             await Users.update({ darkmode: req.body.darkmode }, {
                 where: {
                   user_id: req.user.user_id
                 }
             });
-            res.status(200).send(await Users.findOne({where: {darkmode: req.body.darkmode}}));
+            res.status(200).send(await Users.findOne({where: {user_id: req.user.user_id}}));
         } else {
             res.status(400).send({error: `use the "darkmode" key`});
         }
