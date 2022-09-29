@@ -26,7 +26,11 @@ const Users = sequelize.define('Users', {
     phone: {
       type: DataTypes.BIGINT,
       allowNull: false
-    }
+    },
+    bio: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
   }, {
     sequelize,
     tableName: 'Users',
@@ -54,6 +58,14 @@ const Users = sequelize.define('Users', {
         using: "BTREE",
         fields: [
           { name: "email" },
+        ]
+      },
+      {
+        name: "bio",
+        unique: false,
+        using: "BTREE",
+        fields: [
+          { name: "bio" },
         ]
       },
     ]
